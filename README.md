@@ -26,3 +26,11 @@ browser sends `Origin` -> server responds with `Access-Control-Allow-Origin` -> 
 - Enter this: `var b = fetch('https://cors-demo.glitch.me/allow-cors', {mode:'cors'}); await b;`
   - This should **not** be blocked by CORS.
   - Any origin is allowed because the `server.js` also sets a header `response.set('Access-Control-Allow-Origin', '*');` in the response before sending the response `response.sendFile(__dirname + '/message.json');`.
+
+### Other notes
+
+<https://web.dev/cross-origin-resource-sharing/#share-credentials-with-cors>
+
+- **Sending credentials cookies with CORS (unusual)** requires additional headers:
+  - Request: `credentials: 'include'` (For example: `fetch('https://example.com', { mode: 'cors', credentials: 'include' })`)
+  - Response: `Access-Control-Allow-Origin` must be specific origin and you must incldue `Access-Control-Allow-Credentials: true`.
