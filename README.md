@@ -25,4 +25,4 @@ browser sends `Origin` -> server responds with `Access-Control-Allow-Origin` -> 
   - It's blocked because the `server.js` response is only simply `response.sendFile(__dirname + '/message.json');`
 - Enter this: `var b = fetch('https://cors-demo.glitch.me/allow-cors', {mode:'cors'}); await b;`
   - This should **not** be blocked by CORS.
-  - It's allowed because the `server.js` also sets a header `response.set('Access-Control-Allow-Origin', '*');` in the response before sending the response `response.sendFile(__dirname + '/message.json');`.
+  - Any origin is allowed because the `server.js` also sets a header `response.set('Access-Control-Allow-Origin', '*');` in the response before sending the response `response.sendFile(__dirname + '/message.json');`.
