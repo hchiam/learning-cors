@@ -34,3 +34,28 @@ browser sends `Origin` -> server responds with `Access-Control-Allow-Origin` -> 
 - **Sending credentials cookies with CORS (unusual)** requires additional headers:
   - Request: `credentials: 'include'` (For example: `fetch('https://example.com', { mode: 'cors', credentials: 'include' })`)
   - Response: `Access-Control-Allow-Origin` must be specific origin and you must incldue `Access-Control-Allow-Credentials: true`.
+
+<https://web.dev/cross-origin-resource-sharing/#preflight-requests-for-complex-http-calls>
+
+- **"Complex" HTTP requests** require preflight requests
+
+  - "Complex" request:
+    - uses methods other than "GET", "POST", or "HEAD"
+    - has headers other than `Accept`, `Accept-Language` or `Content-Language`
+    - has `Content-Type` header other than `application/x-www-form-urlencoded`, `multipart/form-data`, or `text/plain`
+  - Preflight:
+
+    - Example request sent before the actual message:
+
+      ```text
+      OPTIONS /data HTTP/1.1 Origin: https://example.com Access-Control-Request-Method: DELETE
+      ```
+
+    - Example response:
+
+      ```text
+      HTTP/1.1 200 OK
+      Access-Control-Allow-Origin: https://example.com
+      Access-Control-Allow-Methods: GET, DELETE, HEAD, OPTIONS
+      Access-Control-Max-Age: <optional-seconds-cache-results-to-not-preflight-request>
+      ```
